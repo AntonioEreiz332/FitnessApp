@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Korisnički profili</h2>
+
+<div class="card mb-3">
+    <div class="card-body">
+        <form method="get" class="mb-3">
+            <div class="row g-3">
+                <div class="col-md-7">
+                    <input type="text" name="search" class="form-control" placeholder="Pretraži profile..." value="{{ request.GET.search }}">
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-text">Godine</span>
+                        <input type="number" name="min_godine" class="form-control" placeholder="Min" value="{{ min_godine }}">
+                        <input type="number" name="max_godine" class="form-control" placeholder="Max" value="{{ max_godine }}">
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-text">Težina (kg)</span>
+                        <input type="number" name="min_tezina" class="form-control" placeholder="Min" value="{{ min_tezina }}">
+                        <input type="number" name="max_tezina" class="form-control" placeholder="Max" value="{{ max_tezina }}">
+                    </div>
+                </div>
+                
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">Primijeni filtere</button>
+                    <a href="{% url 'profil-list' %}" class="btn btn-secondary">Poništi filtere</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    {% for profil in profili %}
+    <div class="col-md-4 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">{{ profil.korisnik.username }}</h3>
+                <p class="card-text">
+                    Godine: {{ profil.godine }}<br>
+                    Visina: {{ profil.visina }} cm<br>
+                    Težina: {{ profil.tezina }} kg
+                </p>
+                <a href="{% url 'profil-detail' profil.pk %}" class="btn btn-primary">Detalji</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <p>Nema pronađenih profila.</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

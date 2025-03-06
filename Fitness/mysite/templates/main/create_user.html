@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+    <h1 style="color: black; text-align: center;">Kreiraj novog korisnika</h1>
+
+    <div style="background: lightblue; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px black;">
+        <form method="post">
+            {% csrf_token %}
+            
+            {% if form.errors %}
+                <div style="color: red; margin-bottom: 15px;">
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <div style="margin-bottom: 15px;">
+                <label for="username">Korisničko ime:</label>
+                <input type="text" id="username" name="username" required
+                       style="width: 100%; padding: 8px; border: 1px solid lightgray; border-radius: 4px;">
+            </div>
+            
+            <div style="margin-bottom: 15px;">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required
+                       style="width: 100%; padding: 8px; border: 1px solid lightgray; border-radius: 4px;">
+            </div>
+            
+            <div style="margin-bottom: 15px;">
+                <label for="password1">Lozinka:</label>
+                <input type="password" id="password1" name="password1" required
+                       style="width: 100%; padding: 8px; border: 1px solid lightgray; border-radius: 4px;">
+            </div>
+            
+            <div style="margin-bottom: 15px;">
+                <label for="password2">Potvrda lozinke:</label>
+                <input type="password" id="password2" name="password2" required
+                       style="width: 100%; padding: 8px; border: 1px solid lightgray; border-radius: 4px;">
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label for="godine">Godine:</label>
+                <input type="number" id="godine" name="godine" required min="1"
+                       style="width: 100%; padding: 8px; border: 1px solid lightgray; border-radius: 4px;">
+            </div>
+            
+            <div style="margin-bottom: 15px;">
+                <label for="visina">Visina (cm):</label>
+                <input type="number" id="visina" name="visina" required min="50"
+                       style="width: 100%; padding: 8px; border: 1px solid lightgray; border-radius: 4px;">
+            </div>
+            
+            <div style="margin-bottom: 15px;">
+                <label for="tezina">Težina (kg):</label>
+                <input type="number" id="tezina" name="tezina" required min="20"
+                       style="width: 100%; padding: 8px; border: 1px solid lightgray; border-radius: 4px;">
+            </div>
+
+            <div style="text-align: center; margin-top: 20px;">
+                <button type="submit" style="background-color: yellow; color: black; border: none; 
+                                          padding: 10px 20px; border-radius: 4px; cursor: pointer;">
+                    Kreiraj korisnika
+                </button>
+                <a href="{% url 'admin_dashboard' %}" style="display: inline-block; background-color: gray; 
+                                                          color: white; text-decoration: none; padding: 10px 20px; 
+                                                          border-radius: 4px; margin-left: 10px;">
+                    Odustani
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

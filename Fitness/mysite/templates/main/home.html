@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Dobrodošli u Fitness Aplikaciju</h1>
+{% if user.is_authenticated %}
+    <br>
+    <p>Dobrodošli, <strong>{{ user.username }}</strong>!</p>
+    <p>Uživajte u praćenju vaših ciljeva i napretka.</p>
+    <div class="row mt-5 justify-content-center align-items-center">
+        {% if user.is_staff %}
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Korisnički Profili</h4>
+                        <p class="card-text">Pregledajte sve korisničke profile</p>
+                        <a href="{% url 'profil-list' %}" class="btn btn-primary">Pregled Profila</a>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Fitness Ciljevi</h4>
+                    <p class="card-text">Pregledajte sve fitness ciljeve</p>
+                    <a href="{% url 'cilj-list' %}" class="btn btn-primary">Pregled Ciljeva</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Vježbe</h4>
+                    <p class="card-text">Pregledajte sve vježbe</p>
+                    <a href="{% url 'vjezba-list' %}" class="btn btn-primary">Pregled Vježbi</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% else %}
+    <p>Molimo <a href="{% url 'login' %}">prijavite se</a> ili se <a href="{% url 'register' %}">registrirajte</a> za nastavak.</p>
+{% endif %}
+{% endblock %}

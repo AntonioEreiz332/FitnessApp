@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Profil korisnika: {{ profil.korisnik.username }}</h2>
+    
+    <div class="card mb-4">
+        <div class="text-center card-body">
+            <h3 class="card-title">Osnovni podaci</h3>
+            <p class="card-text">
+                <strong>Godine:</strong> {{ profil.godine }}<br>
+                <strong>Visina:</strong> {{ profil.visina }} cm<br>
+                <strong>Težina:</strong> {{ profil.tezina }} kg<br>
+                <strong>Opis:</strong> {{ profil.opis|default:"Nije unesen" }}
+            </p>
+        </div>
+    </div>
+
+    <h3>Fitness ciljevi</h3>
+    <div class="list-group mb-4">
+        {% for cilj in profil.fitness_ciljevi.all %}
+        <div class="list-group-item">
+            <h4>{{ cilj.naziv_cilja }}</h4>
+            <p>
+                Ciljna vrijednost: {{ cilj.ciljna_vrijednost }}<br>
+                Trenutna vrijednost: {{ cilj.trenutna_vrijednost }}<br>
+                Rok: {{ cilj.rok }}
+            </p>
+            <a href="{% url 'cilj-detail' cilj.pk %}" class="btn btn-sm btn-primary">Detalji cilja</a>
+        </div>
+        {% empty %}
+        <p>Nema postavljenih ciljeva.</p>
+        {% endfor %}
+    </div>
+
+    <a href="{% url 'profil-list' %}" class="btn btn-primary">Natrag na listu</a>
+</div>
+{% endblock %}

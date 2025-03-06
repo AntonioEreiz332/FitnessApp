@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>{{ vjezba.naziv_vjezbe }}</h2>
+
+<div class="card">
+    <div class="card-body">
+        <p><strong>Trajanje:</strong> {{ vjezba.trajanje }} min</p>
+        <p><strong>Potrošene kalorije:</strong> {{ vjezba.potrosene_kalorije }} kcal</p>
+
+        {% if vjezba.video_url %}
+        <div class="embed-responsive embed-responsive-16by9">
+            <iframe width="560" height="315" src="{{ vjezba.video_url }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+        </div>
+        {% else %}
+        <p><em>Nema dostupnog videa za ovu vježbu.</em></p>
+        {% endif %}
+
+        <a href="{% url 'vjezba-list' %}" class="btn btn-secondary mt-3">Povratak na popis vježbi</a>
+    </div>
+</div>
+{% endblock %}

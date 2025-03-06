@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Fitness Ciljevi</h2>
+
+<a href="{% url 'create-fitness-goal' %}" class="btn btn-primary mb-3">Kreiraj fitness cilj</a>
+
+<div class="card mb-3">
+    <div class="card-body">
+        <form method="get" class="mb-3">
+            <div class="row g-3">
+                <div class="col-md-7">
+                    <input type="text" name="search" class="form-control" placeholder="Pretraži ciljeve..." value="{{ request.GET.search }}">
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-text">Trenutna vrijednost</span>
+                        <input type="number" name="min_trenutna" class="form-control" placeholder="Min" value="{{ min_trenutna }}">
+                        <input type="number" name="max_trenutna" class="form-control" placeholder="Max" value="{{ max_trenutna }}">
+                    </div>
+
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-text">Ciljna vrijednost</span>
+                        <input type="number" name="min_ciljna" class="form-control" placeholder="Min" value="{{ min_ciljna }}">
+                        <input type="number" name="max_ciljna" class="form-control" placeholder="Max" value="{{ max_ciljna }}">
+                    </div>
+                </div>
+                
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">Primijeni filtere</button>
+                    <a href="{% url 'cilj-list' %}" class="btn btn-secondary">Poništi filtere</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    {% for cilj in ciljevi %}
+    <div class="col-md-4 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">{{ cilj.naziv_cilja }}</h3>
+                <p class="card-text">
+                    Korisnik: {{ cilj.korisnik.korisnik.username }}<br>
+                    Trenutna vrijednost: {{ cilj.trenutna_vrijednost }}<br>
+                    Ciljna vrijednost: {{ cilj.ciljna_vrijednost }}<br>
+                    Rok: {{ cilj.rok }}
+                </p>
+                <a href="{% url 'cilj-detail' cilj.pk %}" class="btn btn-primary">Detalji</a>
+                {% if request.user == cilj.korisnik.korisnik or request.user.is_staff %}
+                <form method="post" action="{% url 'ukloni-cilj' cilj.pk %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Jeste li sigurni da želite ukloniti ovaj cilj?');">
+                        Ukloni
+                    </button>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <p>Nema pronađenih ciljeva.</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="profile-container" style="max-width: 600px; margin: 0 auto; padding: 20px;">
+    <h1 style="color: black; text-align: center;">Korisnički profil</h1>
+    
+    <div class="profile-card" style="background: lightgoldenrodyellow; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px black;">
+        <div class="profile-section">
+            <h2 style="color: black; border-bottom: 2px solid black; padding-bottom: 10px;">Osnovni podaci</h2>
+            
+            <div class="profile-info" style="margin: 20px 0;">
+                <p style="margin: 10px 0;">
+                    <strong>Korisničko ime:</strong> 
+                    <span style="color: gray;">{{ username }}</span>
+                </p>
+                
+                <p style="margin: 10px 0;">
+                    <strong>Email:</strong> 
+                    <span style="color: gray;">{{ email }}</span>
+                </p>
+                
+                <p style="margin: 10px 0;">
+                    <strong>Godine:</strong> 
+                    <span style="color: gray;">{{ godine }}</span>
+                </p>
+
+                <p style="margin: 10px 0;">
+                    <strong>Visina:</strong> 
+                    <span style="color: gray;">{{ visina }}</span>
+                </p>
+
+                <p style="margin: 10px 0;">
+                    <strong>Težina:</strong> 
+                    <span style="color: gray;">{{ tezina }}</span>
+                </p>
+
+                <p style="margin: 10px 0;">
+                    <strong>Datum registracije:</strong> 
+                    <span style="color: gray;">{{ date_joined|date:"d.m.Y. H:i" }}</span>
+                </p>
+                
+                <p style="margin: 10px 0;">
+                    <strong>Zadnja prijava:</strong> 
+                    <span style="color: gray;">{{ last_login|date:"d.m.Y. H:i" }}</span>
+                </p>
+                
+                <p style="margin: 10px 0;">
+                    <strong>Status:</strong> 
+                    <span style="color: gray;">
+                        {% if is_staff %}
+                            Administrator
+                        {% else %}
+                            Korisnik
+                        {% endif %}
+                    </span>
+                </p>
+            </div>
+        </div>
+
+        {% if is_staff %}
+        <div class="admin-section" style="margin-top: 20px; padding-top: 20px; border-top: 1px solid lightgray;">
+            <h3 style="color: black;">Administratorske opcije</h3>
+            <p>
+                <a href="{% url 'admin_dashboard' %}" 
+                   style="display: inline-block; 
+                          background-color: yellow; 
+                          color: black; 
+                          padding: 10px 20px; 
+                          text-decoration: none; 
+                          border-radius: 5px;">
+                    Otvori Admin Dashboard
+                </a>
+            </p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

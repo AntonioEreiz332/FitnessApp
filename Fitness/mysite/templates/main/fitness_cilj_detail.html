@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Detalji fitness cilja</h2>
+    
+    <div class="card mb-4">
+        <div class="card-body">
+            <h3 class="card-title">{{ cilj.naziv_cilja }}</h3>
+            <p class="card-text">
+                <strong>Korisnik:</strong> {{ cilj.korisnik.korisnik.username }}<br>
+                <strong>Trenutna vrijednost:</strong> {{ cilj.trenutna_vrijednost }}<br>
+                <strong>Ciljna vrijednost:</strong> {{ cilj.ciljna_vrijednost }}<br>
+                <strong>Rok:</strong> {{ cilj.rok }}<br>
+            </p>
+
+            <a href="{% url 'cilj-list' %}" class="btn btn-primary">Natrag na listu</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

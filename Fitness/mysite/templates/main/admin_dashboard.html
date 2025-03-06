@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="max-width: 800px; margin: 0 auto; padding: 20px;">
+    <h1 style="color: black; text-align: center;">Admin Dashboard</h1>
+
+    <div class="admin-section" style="background: lightblue; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px black;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 2px solid black; padding-bottom: 10px;">
+            <h2 style="color: black; margin: 0;">Lista korisnika</h2>
+            <a href="{% url 'create_user' %}" 
+               style="display: inline-block; background-color: green; color: white; 
+                      padding: 10px 20px; border-radius: 4px; text-decoration: none;">
+                + Dodaj korisnika
+            </a>
+        </div>
+
+        <table style="width: 100%; border-collapse: collapse;">
+            <thead>
+                <tr style="background-color: white;">
+                    <th style="padding: 12px; ">Korisničko ime</th>
+                    <th style="padding: 12px; ">Email</th>
+                    <th style="padding: 12px; ">Status</th>
+                    <th style="padding: 12px; ">Akcije</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td style="padding: 12px;">{{ user.username }}</td>
+                    <td style="padding: 12px;">{{ user.email }}</td>
+                    <td style="padding: 12px;">
+                        {% if user.is_staff %}Administrator{% else %}Korisnik{% endif %}
+                    </td>
+                    <td style="padding: 12px;">
+                        {% if user != request.user %}
+                            <a href="{% url 'edit_user' user.id %}" 
+                               style="background-color: green; color: white; padding: 5px 10px; 
+                                      border-radius: 4px; text-decoration: none; margin-right: 10px;">
+                                Uredi
+                            </a>
+                            <form method="post" action="{% url 'delete_user' user.id %}" style="display: inline;">
+                                {% csrf_token %}
+                                <button type="submit" 
+                                        onclick="return confirm('Jeste li sigurni da želite obrisati ovog korisnika?')"
+                                        style="background-color: red; color: white; padding: 5px 10px; 
+                                      border-radius: 4px; cursor: pointer;">
+                                    Obriši
+                                </button>
+                            </form>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

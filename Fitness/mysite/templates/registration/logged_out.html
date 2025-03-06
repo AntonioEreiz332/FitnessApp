@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    h2 {
+        color: black;
+        font-size: 40px;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    p {
+        font-size: 20px;
+        color: black;
+        text-align: center;
+        padding-bottom: 10px;
+    }
+    .btn-back {
+        background-color: yellow;
+        color: black;
+        padding: 10px 20px;
+        font-size: 25px;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+</style>
+
+<div class="container">
+    <h2>Odjava uspješna</h2>
+    <p>Uspješno ste se odjavili.</p>
+    <p><a href="{% url 'home' %}" class="btn-back">Povratak na početnu stranicu</a></p>
+</div>
+
+{% endblock %}

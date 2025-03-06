@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Vježbe</h2>
+
+<a href="{% url 'create-exercise' %}" class="btn btn-primary mb-3">Odaberi vježbu</a>
+
+<div class="card mb-3">
+    <div class="card-body">
+        <form method="get" class="mb-3">
+            <div class="row g-3">
+                <div class="col-md-7">
+                    <input type="text" name="search" class="form-control" placeholder="Pretraži vježbe..." value="{{ request.GET.search }}">
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-text">Trajanje (min)</span>
+                        <input type="number" name="min_trajanje" class="form-control" placeholder="Min" value="{{ min_trajanje }}">
+                        <input type="number" name="max_trajanje" class="form-control" placeholder="Max" value="{{ max_trajanje }}">
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-text">Kalorije</span>
+                        <input type="number" name="min_kalorije" class="form-control" placeholder="Min" value="{{ min_kalorije }}">
+                        <input type="number" name="max_kalorije" class="form-control" placeholder="Max" value="{{ max_kalorije }}">
+                    </div>
+                </div>
+                
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">Primijeni filtere</button>
+                    <a href="{% url 'vjezba-list' %}" class="btn btn-secondary">Poništi filtere</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    {% for vjezba in vjezbe %}
+    <div class="col-md-4 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">{{ vjezba.naziv_vjezbe }}</h3>
+                <p class="card-text">
+                    Trajanje: {{ vjezba.trajanje }} min<br>
+                    Potrošene kalorije: {{ vjezba.potrosene_kalorije }} kcal<br>
+                </p>
+                <a href="{% url 'vjezba-detail' vjezba.pk %}" class="btn btn-primary">Detalji</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <p>Nema pronađenih vježbi.</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

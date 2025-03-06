@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Odaberi vježbu</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Odaberi vježbu</button>
+</form>
+
+<a href="{% url 'vjezba-list' %}" class="btn btn-secondary mt-3">Povratak na listu vježbi</a>
+{% endblock %}
